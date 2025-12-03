@@ -175,6 +175,8 @@ public class GlobalConfiguration extends ConfigurationPart {
         public boolean skipTripwireHookPlacementValidation = false;
         @Comment("This setting controls if players should be able to break bedrock, end portals and other intended to be permanent blocks.")
         public boolean allowPermanentBlockBreakExploits = false;
+        @Comment("This setting controls if players should be able to break end portal blocks/frames while allowPermanantBlockBreakExploits is true.")
+        public boolean disallowEndPortalBreakExploits = false; //This will do nothing if allowPermanentBlockBreakExploits is false.
         @Comment("This setting controls if player should be able to use TNT duplication, but this also allows duplicating carpet, rails and potentially other items")
         public boolean allowPistonDuplication = false;
         public boolean performUsernameValidation = true;

@@ -35,17 +35,28 @@
      private BlockState defaultBlockState;
 +    // Paper start - Protect Bedrock and End Portal/Frames from being destroyed
 +    public final boolean isDestroyable() {
-+        return io.papermc.paper.configuration.GlobalConfiguration.get().unsupportedSettings.allowPermanentBlockBreakExploits ||
-+            this != Blocks.BARRIER &&
-+            this != Blocks.BEDROCK &&
-+            this != Blocks.END_PORTAL_FRAME &&
-+            this != Blocks.END_PORTAL &&
-+            this != Blocks.END_GATEWAY &&
-+            this != Blocks.COMMAND_BLOCK &&
-+            this != Blocks.REPEATING_COMMAND_BLOCK &&
-+            this != Blocks.CHAIN_COMMAND_BLOCK &&
-+            this != Blocks.STRUCTURE_BLOCK &&
-+            this != Blocks.JIGSAW;
++        final var settings = io.papermc.paper.configuration.GlobalConfiguration.get().unsupportedSettings;
++        if (!settings.allowPermanentBlockBreakExploits) {
++            return !isPermanentBlock(this);
++        }
++        return !(settings.disallowEndPortalBreakExploits && isEndPortalBlock(this));
++    }
++
++    private static boolean isPermanentBlock(Block block) {
++        return block == Blocks.BARRIER ||
++            block == Blocks.BEDROCK ||
++            block == Blocks.END_PORTAL_FRAME ||
++            block == Blocks.END_PORTAL ||
++            block == Blocks.END_GATEWAY ||
++            block == Blocks.COMMAND_BLOCK ||
++            block == Blocks.REPEATING_COMMAND_BLOCK ||
++            block == Blocks.CHAIN_COMMAND_BLOCK ||
++            block == Blocks.STRUCTURE_BLOCK ||
++            block == Blocks.JIGSAW;
++    }
++
++    private static boolean isEndPortalBlock(Block block) {
++        return block == Blocks.END_PORTAL_FRAME || block == Blocks.END_PORTAL || block == Blocks.END_GATEWAY;
 +    }
 +    // Paper end - Protect Bedrock and End Portal/Frames from being destroyed
      private @Nullable Item item;
